@@ -13,7 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from "@mui/material/styles";
 
 const CustomAppBar = styled(AppBar)(({ theme }) => ({
-  background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
+  background: theme.palette.primary.main,
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
 }));
 
@@ -43,13 +43,13 @@ const Header = () => {
         </IconButton>
         <Box display="flex" alignItems="center" sx={{ flexGrow: 1 }}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <b>CRM</b>
+            <b>CRM Employee</b>
           </Typography>
         </Box>
         <Typography variant="h6" component="div" sx={{ mr: 2 }}>
           Welcome, {user.firstName}!
         </Typography>
-        <Avatar sx={{ mr: 2, bgcolor: "primary.main", color: "white" }}>
+        <Avatar sx={{ mr: 2, bgcolor: "black", color: "white" }}>
           {userInitial}
         </Avatar>
         <Button color="inherit" onClick={() => navigate("/profile")}>

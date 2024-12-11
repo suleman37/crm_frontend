@@ -1,25 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   List,
   ListItem,
   ListItemText,
-  Divider,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Button,
+  ListItemIcon,
+  Divider,
 } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import AddTaskIcon from "@mui/icons-material/AddTask";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import CreditScoreIcon from "@mui/icons-material/CreditScore";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import EventIcon from "@mui/icons-material/Event";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-
-  const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
+  const [openLogoutDialog, setOpenLogoutDialog] = React.useState(false);
   const navigate = useNavigate();
 
   const handleOpenLogoutDialog = () => setOpenLogoutDialog(true);
@@ -27,70 +26,65 @@ const Sidebar = () => {
 
   const handleConfirmLogout = () => {
     localStorage.removeItem("authToken");
-
     navigate("/");
     setOpenLogoutDialog(false);
   };
 
   return (
-    <div style={{ height: "87vh", display: "flex" }}>
-      <div
-        style={{
-          width: "250px",
-          height: "104%",
-          backgroundColor: "#f4f4f4",
-          overflowY: "auto",
-        }}
+    <div style={{ width: 250, height: "100vh", backgroundColor: "#ffffff", color: "#2c3e50", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.7)" }}>
+      <List>
+        <ListItem button component={Link} to="/dashboard">
+          <ListItemIcon>
+            <DashboardIcon style={{ color: "#2c3e50" }} />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" style={{ color: "#2c3e50" }} />
+        </ListItem>
+        <Divider />
+        <ListItem button component={Link} to="/attendance">
+          <ListItemIcon>
+            <EventIcon style={{ color: "#2c3e50" }} />
+          </ListItemIcon>
+          <ListItemText primary="Attendance" style={{ color: "#2c3e50" }} />
+        </ListItem>
+        <Divider />
+        <ListItem button component={Link} to="/monthly">
+          <ListItemIcon>
+            <ReceiptIcon style={{ color: "#2c3e50" }} />
+          </ListItemIcon>
+          <ListItemText primary="Monthly Record" style={{ color: "#2c3e50" }} />
+        </ListItem>
+        <Divider />
+        <ListItem button onClick={handleOpenLogoutDialog}>
+          <ListItemIcon>
+            <PowerSettingsNewIcon style={{ color: "#2c3e50" }} />
+          </ListItemIcon>
+          <ListItemText primary="Logout" style={{ color: "#2c3e50" }} />
+        </ListItem>
+      </List>
+      <Dialog
+        open={openLogoutDialog}
+        onClose={handleCloseLogoutDialog}
+        aria-labelledby="logout-dialog-title"
+        aria-describedby="logout-dialog-description"
+        PaperProps={{ style: { maxHeight: '150px', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)' } }} 
       >
-        <List>
-          {/* DASHBOARD */}
-          <ListItem button component={Link} to="/dashboard">
-            <HomeIcon />
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-          {/* INSTALLMENT */}
-          <ListItem button component={Link} to="/attendance">
-            <AddTaskIcon />
-            <ListItemText primary="Attendence" />
-          </ListItem>
-
-          {/* PAYMENT RECEVINGS */}
-          <ListItem button component={Link} to="/monthly">
-            <RadioButtonUncheckedIcon />
-            <ListItemText primary="Monthly Record" />
-          </ListItem>
-          {/* LOGOUT */}
-          <Divider />
-          <ListItem button onClick={handleOpenLogoutDialog}>
-            <ExitToAppIcon />
-            <ListItemText primary="Logout" />
-          </ListItem>
-        </List>
-        {/* Logout Confirmation Dialog */}
-        <Dialog
-          open={openLogoutDialog}
-          onClose={handleCloseLogoutDialog}
-          aria-labelledby="logout-dialog-title"
-          aria-describedby="logout-dialog-description"
-        >
-          <DialogTitle id="logout-dialog-title">
-            <b>Confirm Logout</b>
-          </DialogTitle>
-          <DialogContent>
-            <p id="logout-dialog-description">
-              Are you sure you want to logout?
-            </p>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseLogoutDialog}>
-             Cancel
-            </Button>
-            <Button onClick={handleConfirmLogout} color="primary">
-              Logout
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+        <DialogTitle id="logout-dialog-title" style={{ textAlign: 'center', fontWeight: 'bold', color: '#333' }}>
+          Confirm Logout
+        </DialogTitle>
+        <DialogContent style={{ textAlign: 'center', color: '#555', overflow: 'hidden' }}>
+          <p id="logout-dialog-description" style={{ margin: 0 }}>
+            Are you sure you want to logout?
+          </p>
+        </DialogContent>
+        <DialogActions style={{ justifyContent: 'center' }}>
+          <Button onClick={handleCloseLogoutDialog} style={{ color: '#007bff', fontWeight: 'bold' }}>
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmLogout} style={{ color: '#d32f2f', fontWeight: 'bold' }}>
+            Logout
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

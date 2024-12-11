@@ -260,16 +260,26 @@ const Attendance = () => {
           {isCheckedIn ? "Check Out" : "Check In"}
         </StyledButton>
 
-        <Dialog open={openDialog} onClose={cancelCheckOut}>
-          <DialogTitle>Confirm Check Out</DialogTitle>
-          <DialogContent>
-            <Typography>Are you sure you want to check out?</Typography>
+        <Dialog
+          open={openDialog}
+          onClose={cancelCheckOut}
+          aria-labelledby="logout-dialog-title"
+          aria-describedby="logout-dialog-description"
+          PaperProps={{ style: { maxHeight: '150px', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)' } }} 
+        >
+          <DialogTitle id="logout-dialog-title" style={{ textAlign: 'center', fontWeight: 'bold', color: '#333' }}>
+            Confirm Check Out
+          </DialogTitle>
+          <DialogContent style={{ textAlign: 'center', color: '#555', overflow: 'hidden' }}>
+            <Typography id="logout-dialog-description" style={{ margin: 0 }}>
+              Are you sure you want to check out?
+            </Typography>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={cancelCheckOut} color="primary">
+          <DialogActions style={{ justifyContent: 'center' }}>
+            <Button onClick={cancelCheckOut} style={{ color: '#007bff', fontWeight: 'bold' }}>
               Cancel
             </Button>
-            <Button onClick={handleCheckOut} color="error">
+            <Button onClick={handleCheckOut} style={{ color: '#d32f2f', fontWeight: 'bold' }}>
               Check Out
             </Button>
           </DialogActions>
