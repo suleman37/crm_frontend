@@ -74,25 +74,26 @@ const ToggleButton = styled.button`
   }
 `;
 
-const Login = ({ toggleForm, Authentication }) => {
-  const navigate = useNavigate();
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const DataSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await axios.post("http://localhost:4000/login", { email, password });
-      
+      const response = await axios.post("http://localhost:7000/signup", {
+        email,
+        password,
+      });
       if (response.data === "Success") {
-        Authentication(true);
+        localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/dashboard");
       } else {
         alert("Please Try Again");
       }
     } catch (error) {
-      console.error("Error logging in:", error);
+      console.error("Login failed", error);
       alert("An error occurred. Please try again later.");
     }
   };
@@ -101,9 +102,9 @@ const Login = ({ toggleForm, Authentication }) => {
     <Container>
       <FormWrapper>
         <Title>
-          <b>Employee Panel Login</b>
+          <b>Admin Panel Login</b>
         </Title>
-        <form onSubmit={DataSubmit}>
+        <form onSubmit={handleLogin}>
           <Input
             type="email"
             placeholder="Email"
@@ -120,9 +121,14 @@ const Login = ({ toggleForm, Authentication }) => {
             <b>Login</b>
           </Button>
         </form>
+        <ToggleButton>
+          <Link to="/forgetpassword" style={{ textDecoration: 'none' }}>
+            Forgot Password
+          </Link>
+        </ToggleButton>
       </FormWrapper>
     </Container>
   );
 };
 
-export default Login;
+export default LoginPage;
